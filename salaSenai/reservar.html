@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Reservar Sala | Sala SENAI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;color:#0a2540;background:#fff}
+
+header{
+    padding:20px 60px;
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #eee;
+}
+header h1{
+    font-family:'Archivo Black',sans-serif;
+    color:#0a4fb3;
+}
+nav a{
+    margin-left: 35px;
+    text-decoration:none;
+    color:#0a2540;
+    font-size: 20px;
+}
+
+.container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:80px 60px;
+    min-height:80vh;
+}
+
+.text{
+    width:45%;
+}
+.text h2{
+    font-family:'Archivo Black',sans-serif;
+    font-size:44px;
+    margin-bottom:20px;
+}
+.text p{
+    color:#425466;
+    margin-bottom:30px;
+}
+
+.form-box{
+    width:45%;
+    background:#f6f9fc9f;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 20px 40px rgba(0,0,0,.08);
+}
+
+.form-box h3{
+    font-family:'Archivo Black',sans-serif;
+    margin-bottom:25px;
+}
+
+label{
+    font-size:13px;
+    margin-top:15px;
+    display:block;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border-radius:5px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    background:#0a4fb3;
+    color:white;
+    cursor:pointer;
+    transform: scale(1.06) translateY(-6px);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.12);
+}
+button:hover{background:#083d8c}
+
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: #0a4fb3;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 25px rgba(10, 79, 179, 0.4);
+}
+
+
+footer{
+    background:#f1f1f1;
+    text-align:center;
+    padding:15px;
+    font-size:12px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Sala SENAI</h1>
+<nav>
+<a href="index.html">Início</a>
+<a href="reservar.html">Reservar Sala</a>
+<a href="minhas_reservas.html">Minhas Reservas</a>
+</nav>
+</header>
+
+<section class="container">
+<div class="text">
+<h2>Reserve sua sala<br>com facilidade</h2>
+<p>Selecione a sala, data e horário disponíveis para garantir sua reserva de forma rápida.</p>
+</div>
+
+<div class="form-box">
+<h3>Cadastro da Reserva</h3>
+
+<form action="salvar_reserva.php" method="POST">
+<label>Nome do Instrutor</label>
+<input type="text" name="nome" required>
+
+<label>Turma</label>
+<input type="text" name="turma" required>
+
+<label>Sala</label>
+<select name="sala" required>
+<option value="">Selecione</option>
+<option>Laboratório 01</option>
+<option>Laboratório 02</option>
+<option>Sala 101</option>
+<option>Sala 102</option>
+</select>
+
+<label>Data</label>
+<input type="date" name="data" required>
+
+<label>Horário</label>
+<input type="time" name="horario" required>
+
+<button type="submit">Confirmar Reserva</button>
+</form>
+</div>
+</section>
+
+<footer>
+Projeto acadêmico — Curso Técnico em Desenvolvimento de Sistemas
+</footer>
+
+</body>
+</html>

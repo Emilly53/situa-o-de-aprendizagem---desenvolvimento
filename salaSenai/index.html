@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Sala SENAI | Reservas</title>
+
+    <!-- Fonte -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #0a2540;
+        }
+
+        header {
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        header h1 {
+            font-family: 'Archivo Black', sans-serif;
+            color: #0a4fb3;
+            font-size: 40px;
+        }
+
+        nav a {
+            margin-left: 25px;
+            text-decoration: none;
+            color: #0a2540;
+            font-size: 20px;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 60px;
+            min-height: 80vh;
+        }
+
+        .hero-text {
+            width: 45%;
+        }
+
+        .hero-text h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 25px;
+        }
+
+        .hero-text p {
+            font-size: 16px;
+            color: #425466;
+            margin-bottom: 35px;
+            max-width: 450px;
+        }
+
+        .hero-text a {
+            display: inline-block;
+            padding: 14px 28px;
+            background-color: #0a4fb3;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-text a:hover {
+            background-color: #083d8c;
+            transform: scale(1.06) translateY(-6px);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.12);
+        }
+
+        .hero-card {
+            width: 45%;
+            background-color: #f6f9fc;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .hero-card h3 {
+            font-family: 'Archivo Black', sans-serif;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            width: 100%;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+
+            /* ANIMAÇÃO */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.06) translateY(-6px);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.12);
+        }
+
+
+        .card span {
+            font-size: 12px;
+            color: #0a4fb3;
+            font-weight: bold;
+        }
+
+        .card h4 {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .card p {
+            font-size: 13px;
+            color: #425466;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text, .hero-card {
+                width: 100%;
+            }
+
+            .hero-text h2 {
+                font-size: 36px;
+            }
+
+            .cards {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Sala SENAI</h1>
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="reservar.html">Reservar Sala</a>
+        <a href="minhas_reservas.html">Minhas Reservas</a>
+    </nav>
+</header>
+
+<section class="hero">
+
+    <div class="hero-text">
+        <h2>Agendamento simples<br>e organizado</h2>
+        <p>
+            O Sala SENAI facilita o controle e a reserva de salas e laboratórios,
+            permitindo agendamentos rápidos e sem conflitos de horário.
+        </p>
+        <a href="reservar.html" class="btn">Fazer uma reserva</a>
+    </div>
+
+    <div class="hero-card">
+        <h3>Organize suas reservas</h3>
+
+        <div class="cards">
+            <div class="card">
+                <span>Reserva</span>
+                <h4>Agende com antecedência</h4>
+                <p>Escolha data, horário e sala disponíveis em poucos cliques.</p>
+            </div>
+
+            <div class="card">
+                <span>Controle</span>
+                <h4>Visualize seus horários</h4>
+                <p>Acompanhe e gerencie todas as suas reservas em um só lugar.</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<footer>
+    Projeto acadêmico — Curso Técnico em Desenvolvimento de Sistemas | SENAI
+</footer>
+
+</body>
+</html>
