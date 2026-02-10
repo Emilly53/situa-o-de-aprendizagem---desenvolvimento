@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Reservas</title>
+<link rel="stylesheet" href="Style.css">
+<style>
+    .status-message {
+        text-align: center;
+        margin: 20px 0;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    
+    .status-message.success {
+        color: #0b7248;
+    }
+    
+    .status-message.info {
+        color: #0a4fb3;
+    }
+    
+    .card-reserva {
+        position: relative;
+    }
+    
+    .btn-cancelar {
+        background: #d32f2f;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+    
+    .btn-cancelar:hover {
+        background: #b71c1c;
+    }
+    
+    .no-reservas {
+        text-align: center;
+        color: #666;
+        font-size: 16px;
+        margin-top: 50px;
+        padding: 40px;
+    }
+</style>
+</head>
+<body>
+
+<header class="header">
+    <h1>Reserva de Salas</h1>
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="reservar.html">Reservar Sala</a>
+    </nav>
+</header>
+
+<div class="bolhas">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<main class="minhas-reservas-container">
+
+    <h2 class="titulo-reservas">Minhas Reservas</h2>
+    <div id="statusMsg" class="status-message"></div>
+
+    <div class="reservas-lista" id="reservas-lista">
+        <div class="no-reservas" id="no-reservas">Nenhuma reserva encontrada.</div>
+    </div>
+
+    <a href="index.html" class="voltar"> ← Voltar</a>
+
+</main>
+
+<footer>
+    © 2026 - Sistema de Reserva de Salas
+</footer>
+
+<script src="Script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ROOMS = [
+        { id: 'sala-a', name: 'Sala A (10 pessoas)' },
+        { id: 'sala-b', name: 'Sala B (6 pessoas)' },
+        { id: 'sala-c', name: 'Sala C (20 pessoas)' }
+    ];
+
+    const $reservasList = document.getElementById('reservas-lista');
+    const $noReservas = document.getElementById('no-reservas');
+    const $statusMsg = document.getElementById('statusMsg');
+
+    function getBookings() {
+        try {
+            return JSON.parse(localStorage.getItem('bookings') || '[]');
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveBookings(bookings) {
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+    }
+
+    function formatDate(isoString) {
+        const d = new Date(isoString);
+        if (isNaN(d)) return '';
+        
+        const dia = String(d.getDate()).padStart(2, '0');
+        const mes = String(d.getMonth() + 1).padStart(2, '0');
+        const ano = d.getFullYear();
+        
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    function formatTime(isoString) {
+        const d = new Date(isoString);
+        if (isNaN(d)) return '';
+        
+        const horas = String(d.getHours()).padStart(2, '0');
+        const minutos = String(d.getMinutes()).padStart(2, '0');
+        
+        return `${horas}:${minutos}`;
+    }
+
+    function getRoomName(roomId) {
+        const room = ROOMS.find(r => r.id === roomId);
+        return room ? room.name : roomId;
+    }
+
+    function renderBookings() {
+        const allBookings = getBookings();
+        const currentUser = window.getLoggedUser();
+        
+        // Filtrar apenas as reservas do usuário logado
+        const userBookings = allBookings
+            .filter(b => b.user === currentUser)
+            .sort((a, b) => new Date(a.start) - new Date(b.start));
+        
+        if (userBookings.length === 0) {
+            $noReservas.style.display = 'block';
+            $reservasList.innerHTML = '<div class="no-reservas" id="no-reservas">Nenhuma reserva encontrada.</div>';
+            return;
+        }
+
+        $noReservas.style.display = 'none';
+        $reservasList.innerHTML = '';
+
+        for (const bk of userBookings) {
+            const card = document.createElement('div');
+            card.className = 'card-reserva';
+            
+            const startDate = formatDate(bk.start);
+            const startTime = formatTime(bk.start);
+            const endTime = formatTime(bk.end);
+            const roomName = getRoomName(bk.room);
+
+            card.innerHTML = `
+                <h3>${roomName}</h3>
+                <p><strong>Data:</strong> ${startDate}</p>
+                <p><strong>Horário:</strong> ${startTime} - ${endTime}</p>
+                <p><strong>Usuário:</strong> ${bk.user || 'Anônimo'}</p>
+                <button class="btn-cancelar" data-id="${bk.id}">Cancelar Reserva</button>
+            `;
+
+            const btnCancelar = card.querySelector('.btn-cancelar');
+            btnCancelar.addEventListener('click', function() {
+                cancelBooking(bk.id);
+            });
+
+            $reservasList.appendChild(card);
+        }
+    }
+
+    function cancelBooking(id) {
+        if (!confirm('Tem certeza que deseja cancelar esta reserva?')) {
+            return;
+        }
+
+        let bookings = getBookings();
+        bookings = bookings.filter(b => b.id !== id);
+        saveBookings(bookings);
+        
+        showStatus('Reserva cancelada com sucesso!', 'success');
+        renderBookings();
+    }
+
+    function showStatus(msg, type) {
+        $statusMsg.textContent = msg;
+        $statusMsg.className = 'status-message ' + type;
+        setTimeout(() => {
+            $statusMsg.textContent = '';
+            $statusMsg.className = 'status-message';
+        }, 3500);
+    }
+
+    renderBookings();
+});
+</script>
+
+</body>
+</html>

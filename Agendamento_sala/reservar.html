@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservar Sala</title>
+    <link rel="stylesheet" href="Style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f9fc;
+            color: #0a2540;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* BOLHAS */
+        .bolhas {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bolhas span {
+            position: absolute;
+            bottom: -150px;
+            width: 60px;
+            height: 60px;
+            background: rgba(10, 79, 179, 0.15);
+            border-radius: 50%;
+            animation: subir 20s linear infinite;
+        }
+
+        .bolhas span:nth-child(1) { left: 10%; }
+        .bolhas span:nth-child(2) { left: 30%; width: 80px; height: 80px; }
+        .bolhas span:nth-child(3) { left: 50%; }
+        .bolhas span:nth-child(4) { left: 70%; width: 90px; height: 90px; }
+        .bolhas span:nth-child(5) { left: 90%; }
+
+        @keyframes subir {
+            to { transform: translateY(-120vh); }
+        }
+
+        /* HEADER */
+        header {
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            background: #fff;
+        }
+
+        header h1 {
+            color: #0a4fb3;
+        }
+
+        nav a {
+            margin-left: 40px;
+            text-decoration: none;
+            color: #0a2540;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* CONTAINER */
+        .section {
+            display: flex;
+            justify-content: center;
+            padding: 120px 20px; 
+        }
+
+
+        .card {
+            border:1px solid #ddd;
+            margin-top:16px;
+            background: #fff;
+            width: 100%;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #0a4fb3;
+            font-size: 30px;
+        }
+
+        /* FORM */
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            background: #0a4fb3;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #083d8c;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #0a4fb3;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .actions-row {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #status {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        #status.danger {
+            color: #d32f2f;
+        }
+
+        #status.success {
+            color: #388e3c;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- BOLHAS -->
+<div class="bolhas">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- HEADER -->
+<header>
+    <h1>Reserva de Salas</h1>
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="minhas-reservas.html">Minhas Reservas</a>
+    </nav>
+</header>
+
+<!-- CONTEÚDO -->
+  <link rel="stylesheet" href="Style.css">
+  <section class="card">
+    <div><strong>Nova reserva</strong></div>
+
+    <label for="userName">Seu Nome/Matrícula</label>
+    <input id="userName" type="text" placeholder="Ex: João Silva - 000234859">
+
+    <label for="room">Sala</label>
+    <select id="room"></select>
+
+    <div class="row">
+      <div class="flex-1">
+        <label for="start">Início</label>
+        <input id="start" type="datetime-local">
+      </div>
+      <div class="flex-1">
+        <label for="end">Término</label>
+        <input id="end" type="datetime-local">
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button id="bookBtn">Reservar</button>
+      <div id="status" class="muted"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="section-header">
+      <div><strong>Reservas</strong></div>
+      <div class="muted">Filtre por sala</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Sala</th><th>Início</th><th>Término</th><th>Usuário</th><th></th></tr>
+      </thead>
+      <tbody id="bookingsList"></tbody>
+    </table>
+
+    <div id="noBookings" class="muted">Nenhuma reserva encontrada.</div>
+  </section>
+
+  <script src="Script.js"></script>
+<footer>
+    © 2026 - Sistema de Reserva de Salas
+</footer>
+
+</body>
+</html>
